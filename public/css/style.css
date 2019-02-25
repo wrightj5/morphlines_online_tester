@@ -4,12 +4,16 @@
 */
 
 body {
-  width: 800px;
+  width: auto;
   margin: 0 auto;
+	line-height: 21px;
   font-family: 'Open Sans', sans-serif;
+	overflow: visible;
+	transition: all 0.5s ease-in-out;
+  background: #009999
 }
 .container {
-  width: 600px;
+  width: 80%;
   margin: 0 auto;
 }
 fieldset {
@@ -29,34 +33,38 @@ fieldset {
   min-width: -webkit-min-content;
   padding: 30px;
 }
-.ghost-input, p {
+.ghost-input {
+	font-family: Consolas,Liberation Mono,Courier,monospace;
+  min-height: 350px;
+  min-width: 500px;
+  line-height: 21px;
+  resize: none;
+	overflow: visible;
+	transition: all 0.5s ease-in-out;
   display: block;
   font-weight:300;
   width: 100%;
-  font-size: 25px;
+  font-size: 12px;
   border:0px;
   outline: none;
-  width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  color: #4b545f;
-  background: #fff;
-  font-family: Open Sans,Verdana;
+  color: #fff;
+  background: #2E2E2E;
   padding: 10px 15px;
-  margin: 30px 0px;
+  margin: 0px 0px;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
 }
 .ghost-input:focus {
   border-bottom:1px solid #ddd;
 }
 .ghost-button {
-  background-color: transparent;
-  border:2px solid #ddd;
+  background-color: #748b8e;
+  border:2px solid #748b83;
   padding:10px 30px;
   width: 100%;
   min-width: 350px;
@@ -67,7 +75,8 @@ fieldset {
   transition: all 0.1s ease-in-out;
 }
 .ghost-button:hover {
-  border:2px solid #515151;
+  border: 2px solid #7e979a;
+  background-color: #7e979a;
 }
 p {
   color: #E64A19;
