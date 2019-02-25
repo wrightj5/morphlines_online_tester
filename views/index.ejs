@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="container">
+      <fieldset>
+        <form action="/" method="post">
+          <textarea id="config" name="config" class="ghost-input" placeholder="Enter ML Config..." ></textarea>
+          <textarea name="data" id="data" class="ghost-input" placeholder="Enter Test Data..."></textarea>
+          <input type="submit" class="ghost-button" value="Test Morphlines">
+        </form>
+        <% if(typeof ml_return!='undefined' ? ml_return : ''){ %>
+          <p><%= ml_return %></p>
+        <% } %>
+
+        <% if(typeof error!='undefined' ? error : ''){ %>
+          <p><%= error %></p>
+        <% } %>
+      </fieldset>
+    </div>
+  </body>
+</html>
