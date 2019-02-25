@@ -3,19 +3,63 @@
   https://codepen.io/official_naveen/pen/rgknI
 */
 
-body {
-  width: 80%;
-  margin: 0 auto;
-	line-height: 21px;
+body, html {
+  margin:0;
+  padding:0;
+  width: 100%;
+  height:100%;
   font-family: 'Open Sans', sans-serif;
-	overflow: visible;
-	transition: all 0.5s ease-in-out;
-  background: #009999
+  transition: all 0.5s ease-in-out;
+  background:#3d3d3a;
+  color:#afafaf;
+  overflow-y:scroll;
 }
 .container {
-  width: 80%;
-  margin: 0 auto;
+  height:100%;
+  display:flex;
+  flex-direction:column;
 }
+form {
+  height: calc(100vh - 350px) ;
+}
+.input {
+  flex-grow:1;
+}
+.output {
+  height:350px;
+  overflow-y:scroll;
+}
+.input-panels {
+  width: 100%;
+  display:flex;
+  height:calc(100% - 50px) !important;
+  align-content:stretch;
+}
+.input-panels > div {
+  flex:0 0 50%;
+  margin:1px;
+  height:100%;
+}
+.CodeMirror {
+  height:calc(100% - 50px) !important;
+}
+
+.action {
+  height:40px;
+  background:#1e1e1d;
+}
+h1 {
+  font-size:12px;
+  background:#272722;
+  color:#afafaf;
+  margin:0px;
+  padding:15px 10px;
+}
+
+.output {
+  border:1px solid red;
+}
+/*
 fieldset {
   display: block;
   -webkit-margin-start: 0px;
@@ -81,3 +125,4 @@ fieldset {
 p {
   color: #fff;
 }
+*/
