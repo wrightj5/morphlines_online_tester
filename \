@@ -1,7 +1,0 @@
-$('.editor').on('ready load keyup keydown change', '.editor', function(){
-  var myCodeMirror = CodeMirror(function(elt) {
-      $('.editor').replaceWith(elt);
-  }, {value: $('.editor').val(),
-      lineNumbers: true,
-      theme: "monokai"});
-});
