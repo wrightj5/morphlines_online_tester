@@ -16,6 +16,9 @@ window.onload = function () {
         theme: "monokai",
         lineNumbers: true,
         lineWrapping: true,
+        extraKeys: {"Ctrl-Q": function(cm) { cm.foldCode(cm.getCursor()); }},
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     });
 }
 $(document).on('keyup keydown change', '.editor', function(){

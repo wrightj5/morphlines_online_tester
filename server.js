@@ -56,17 +56,16 @@ app.post('/', function (req, res) {
       const child = spawn('/Users/jakewright/lib.morphlines/ml', [ "--id=normaliser", items_processed['conf'], "--input=" + items_processed['log']], { shell: true});
 
       stdout_buf = ""
-      stdout_buf_fmt = ""
+      stdout_buf_fmt = []
       child.stdout.setEncoding('utf8');
       child.stdout.on('data', function(chunk) {
         var str = chunk.toString(), lines = str.split(/(\r?\n)/g);
         for (var i=0; i<lines.length; i++) {
           // Process the line, noting it might be incomplete.
           try {
-            JSON.parse(lines[i])
-            stdout_buf_fmt += lines[i]
+            parsed = JSON.parse(lines[i])
+            stdout_buf_fmt.push(parsed)
           } catch (e) {
-            console.log(e)
             stdout_buf += lines[i]
           }
         }
@@ -82,7 +81,7 @@ app.post('/', function (req, res) {
 
       child.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-        res.render('index', {ml_return_formatted: stdout_buf_fmt, ml_return: stdout_buf, error: stderr_buf, config: req.body.config, data: req.body.data});
+        res.render('index', {ml_return_formatted: JSON.stringify(stdout_buf_fmt, null, 2), ml_return: stdout_buf, error: stderr_buf, config: req.body.config, data: req.body.data});
       });
     }
   });
