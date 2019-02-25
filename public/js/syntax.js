@@ -3,6 +3,7 @@ window.onload = function () {
         mode: "yaml",
         theme: "monokai",
         lineNumbers: true,
+        lineWrapping: true,
     });
     var codeMirror = CodeMirror.fromTextArea(document.getElementById('data'), {
         mode: "javascript",
@@ -23,6 +24,7 @@ $(document).on('keyup keydown change', '.editor', function(){
   }, {value: $('.editor').val(),
       lineNumbers: true,
       theme: "monokai",
+      lineWrapping: true,
       mode: "yaml"});
 });
 $(document).on('keyup keydown change', '.editor2', function(){
@@ -31,6 +33,7 @@ $(document).on('keyup keydown change', '.editor2', function(){
   }, {value: $('.editor2').val(),
       lineNumbers: true,
       theme: "monokai",
+      lineWrapping: true,
       mode: "javascript"});
 });
 $(document).on('keyup keydown change', '.result', function(){
@@ -38,6 +41,7 @@ $(document).on('keyup keydown change', '.result', function(){
       $('.result').replaceWith(elt);
   }, {value: $('.result').val(),
       lineNumbers: true,
+      lineWrapping: true,
       theme: "monokai",
       mode: "javascript"});
 });

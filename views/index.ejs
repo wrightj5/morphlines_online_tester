@@ -23,46 +23,43 @@
           <div class='action'>
             <input type="submit" class="ghost-button" value="Test Morphlines">
           </div>
-      
-          <div class="input-panels"> 
-            <div> 
+
+          <div class="input-panels">
+            <div>
               <h1> Morphlines Configuration </h1>
-              <textarea 
-                id="config" 
-                name="config" 
-                class="editor"  
-                placeholder="Enter ML Config...">
-                <% if(typeof config!='undefined' ? config : ''){ %><%= config %><% } %></textarea>
+              <textarea
+                id="config"
+                name="config"
+                class="editor"
+                placeholder="Enter ML Config..."><% if(typeof config!='undefined' ? config : ''){ %><%= config %><% } %></textarea>
             </div>
-            <div> 
+            <div>
               <h1> Morphlines Test Data </h1>
-              <textarea 
-                name="data" 
-                id="data" 
-                class="editor2" 
-                placeholder="Enter Test Data...">
-                <% if(typeof data!='undefined' ? data : ''){ %><%= data %><% } %></textarea>
+              <textarea
+                name="data"
+                id="data"
+                class="editor2"
+                placeholder="Enter Test Data..."><% if(typeof data!='undefined' ? data : ''){ %><%= data %><% } %></textarea>
             </div>
           </div>
 
         </form>
       </div>
 
-      <div class='output'> 
+      <div class='output'>
 
         <!-- Tab links -->
 
 
         <h1> Results Stdout: </h1>
-          
+
         <p>
           <% if(typeof ml_return!='undefined' ? ml_return : ''){ %><%= ml_return %><% } %>
         </p>
-        <textarea 
-          id="result" 
-          class="result" 
-          placeholder="Results go here...">
-          <% if(typeof ml_return_formatted!='undefined' ? ml_return_formatted : ''){ %><%= ml_return_formatted %><% } %>
+        <textarea
+          id="result"
+          class="result"
+          placeholder="Results go here..."><% if(typeof ml_return_formatted!='undefined' ? ml_return_formatted : ''){ %><%= ml_return_formatted %><% } %>
         </textarea>
 
         <% if(typeof error!='undefined' ? error : ''){ %>

@@ -53,18 +53,22 @@ app.post('/', function (req, res) {
     items_processed[ext] = response
     if(Object.keys(items_processed).length == 2){
       const { spawn } = require('child_process');
-      // ~/lib.morphlines/ml --id=normaliser ~/lib.morphlines/configs/openvpn_test_norman_ml.conf --input=~/lib.morphlines/data/openvpn.log
       const child = spawn('/Users/jakewright/lib.morphlines/ml', [ "--id=normaliser", items_processed['conf'], "--input=" + items_processed['log']], { shell: true});
-//      const child = spawn('cat', [ items_processed['conf']]);
 
       stdout_buf = ""
       stdout_buf_fmt = ""
-      child.stdout.on('data', (chunk) => {
-        // data from standard output is here as buffers
-        if( chunk.toString().startsWith("{") ) {
-          stdout_buf_fmt += chunk
-        } else {
-          stdout_buf += chunk
+      child.stdout.setEncoding('utf8');
+      child.stdout.on('data', function(chunk) {
+        var str = chunk.toString(), lines = str.split(/(\r?\n)/g);
+        for (var i=0; i<lines.length; i++) {
+          // Process the line, noting it might be incomplete.
+          try {
+            JSON.parse(lines[i])
+            stdout_buf_fmt += lines[i]
+          } catch (e) {
+            console.log(e)
+            stdout_buf += lines[i]
+          }
         }
         console.log(`child stdout:\n${chunk}`);
       });
