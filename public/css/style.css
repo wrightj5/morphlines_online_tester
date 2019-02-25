@@ -4,7 +4,7 @@
 */
 
 body {
-  width: auto;
+  width: 80%;
   margin: 0 auto;
 	line-height: 21px;
   font-family: 'Open Sans', sans-serif;
@@ -79,5 +79,5 @@ fieldset {
   background-color: #7e979a;
 }
 p {
-  color: #E64A19;
+  color: #fff;
 }

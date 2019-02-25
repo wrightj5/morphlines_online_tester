@@ -58,9 +58,14 @@ app.post('/', function (req, res) {
 //      const child = spawn('cat', [ items_processed['conf']]);
 
       stdout_buf = ""
+      stdout_buf_fmt = ""
       child.stdout.on('data', (chunk) => {
         // data from standard output is here as buffers
-        stdout_buf += chunk
+        if( chunk.toString().startsWith("{") ) {
+          stdout_buf_fmt += chunk
+        } else {
+          stdout_buf += chunk
+        }
         console.log(`child stdout:\n${chunk}`);
       });
       stderr_buf = ""
@@ -73,7 +78,7 @@ app.post('/', function (req, res) {
 
       child.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-        res.render('index', {ml_return: stdout_buf, error: stderr_buf});
+        res.render('index', {ml_return_formatted: stdout_buf_fmt, ml_return: stdout_buf, error: stderr_buf, config: req.body.config, data: req.body.data});
       });
     }
   });

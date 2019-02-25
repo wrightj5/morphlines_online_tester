@@ -19,17 +19,16 @@
       <fieldset>
         <form action="/" method="post">
           <h1> Morphlines Configuration </h1>
-          <textarea rows="4" cols="50" id="config" name="config" class="editor"  placeholder="Enter ML Config..." ></textarea>
+          <textarea rows="4" cols="50" id="config" name="config" class="editor"  placeholder="Enter ML Config..."><% if(typeof config!='undefined' ? config : ''){ %><%= config %><% } %></textarea>
           <br/><br/>
           <h1> Morphlines Test Data </h1>
-          <textarea rows="4" cols="50" name="data" id="data" class="editor2" placeholder="Enter Test Data..."></textarea>
+          <textarea rows="4" cols="50" name="data" id="data" class="editor2" placeholder="Enter Test Data..."><% if(typeof data!='undefined' ? data : ''){ %><%= data %><% } %></textarea>
           <br/>
           <input type="submit" class="ghost-button" value="Test Morphlines">
         </form>
-        <% if(typeof ml_return!='undefined' ? ml_return : ''){ %>
           <h1> Results Stdout: </h1>
-          <textarea class="editor ghost-input"><%= ml_return %></textarea>
-        <% } %>
+          <p rows="4" cols="50" style="font-size: 8" ><% if(typeof ml_return!='undefined' ? ml_return : ''){ %><%= ml_return %><% } %></p>
+          <textarea id="result" rows="4" cols="50" class="result" placeholder="Results go here..."><% if(typeof ml_return!='undefined' ? ml_return : ''){ %><%= ml_return_formatted %><% } %></textarea>
 
         <% if(typeof error!='undefined' ? error : ''){ %>
           <h3> Results Stderr: </h1>
