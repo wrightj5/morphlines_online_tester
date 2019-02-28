@@ -59,27 +59,25 @@ app.post('/', function (req, res) {
       stdout_buf_fmt = []
       child.stdout.setEncoding('utf8');
       child.stdout.on('data', function(chunk) {
-        var str = chunk.toString(), lines = str.split(/(\r?\n)/g);
-        for (var i=0; i<lines.length; i++) {
-          // Process the line, noting it might be incomplete.
-          try {
-            parsed = JSON.parse(lines[i])
-            stdout_buf_fmt.push(parsed)
-          } catch (e) {
-            stdout_buf += lines[i]
-          }
-        }
+        stdout_buf += chunk.toString()
         console.log(`child stdout:\n${chunk}`);
       });
       stderr_buf = ""
-      // use child.stdout.setEncoding('utf8'); if you want text chunks
       child.stderr.on('data', (chunk) => {
-        // data from standard output is here as buffers
         stderr_buf += chunk
         console.log(`child stderr:\n${chunk}`);
       });
 
       child.on('close', (code) => {
+        var lines = stdout_buf.split(/(\r?\n)/g);
+        for (var i=0; i<lines.length; i++) {
+          try {
+            parsed = JSON.parse(lines[i])
+            stdout_buf_fmt.push(parsed)
+          } catch (e) {
+            continue
+          }
+        }
         console.log(`child process exited with code ${code}`);
         res.render('index', {ml_return_formatted: JSON.stringify(stdout_buf_fmt, null, 2), ml_return: stdout_buf, error: stderr_buf, config: req.body.config, data: req.body.data});
       });
@@ -87,6 +85,6 @@ app.post('/', function (req, res) {
   });
 })
 
-app.listen(3000, function () {
+app.listen(3000, '0.0.0.0', function () {
   console.log('Example app listening on port 3000!')
 })
