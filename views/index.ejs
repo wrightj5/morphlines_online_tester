@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Morphlines Tester</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/codemirror/lib/codemirror.js"></script>
     <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="/codemirror/theme/nord.css">
     <link rel="stylesheet" href="/codemirror/addon/fold/foldgutter.css">
     <link rel="stylesheet" href="/codemirror/addon/dialog/dialog.css">
     <link rel="stylesheet" href="/codemirror/addon/search/matchesonscrollbar.css">
-    <script src="/js/syntax.js"></script>
     <script src="codemirror/addon/edit/matchbrackets.js"></script>
     <script src="codemirror/addon/fold/brace-fold.js"></script>
     <script src="codemirror/addon/fold/indent-fold.js"></script>
@@ -26,55 +27,104 @@
     <script src="codemirror/addon/scroll/simplescrollbars.js"></script>
     <script src="codemirror/addon/scroll/annotatescrollbar.js"></script>
     <script src="codemirror/addon/dialog/dialog.js"></script>
+    <script src="codemirror/addon/selection/active-line.js"></script>
     <script src="codemirror/mode/javascript/javascript.js"></script>
     <script src="codemirror/mode/yaml/yaml.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <!-- our styles need to go last -->
+    <link rel="stylesheet" type="text/css" href="/dist/style.css">
+    <script src="/js/syntax.js"></script>
   </head>
-  <body>
-    <div class="container">
 
-      <div class='input'>
-        <form action="/" method="post">
+  <body class="text-grey text-sm">
+    <div class="flex flex-col justify-between w-auto h-screen m-0">
 
-          <div class='action'>
-            <input type="submit" class="ghost-button" value="Test Morphlines">
+      <!-- input container -->
+      <div class='input flex-grow flex-shrink flex flex-col overflow-y-hidden'>
+
+          <!-- action bar -->
+          <div class='action flex-no-shrink flex-no-grow flex items-center flex-row justify-between h-12 bg-action-bar' >
+
+            <!-- left items -->
+            <div class='font-mono pl-4 text-accent'>
+              <span class='font-hairline'>Morphlines</span><span class='font-extrabold'>Tester</span>
+            </div>
+
+            <!-- right items -->
+            <div> 
+              <button type="submit" class="bg-transparent border border-accent text-accent py-1 px-3 text-xs rounded mr-5 hover:bg-accent hover:text-action-bar hover:opacity-75">
+                  <i class="fas fa-play"></i>  Test Configuration
+              </button>
+            </div>
           </div>
 
-          <div class="input-panels">
-            <div>
-              <h1> Morphlines Configuration </h1>
+          <!-- main input panels -->
+          <div class="input-panels flex-grow flex flex-row mb-px mt-px overflow-x-hidden">
+
+            <!-- left panel -->
+            <div class="w-1/2 mr-px flex-no-shrink flex flex-col overflow-y-hidden">
+              <div class='code-header'> Morphlines Configuration </div>
               <textarea
                 id="config"
                 name="config"
-                class="editor"
+                class="editor flex-grow overflow-y-hidden"
                 placeholder="Enter ML Config..."><% if(typeof config!='undefined' ? config : ''){ %><%= config %><% } %></textarea>
             </div>
-            <div>
-              <h1> Morphlines Test Data </h1>
+
+            <!-- right panel -->
+            <div class="w-1/2 flex-no-shrink flex flex-col">
+              <div class='code-header'>Test Data </div>
               <textarea
                 name="data"
                 id="data"
-                class="editor2"
+                class="editor2 flex-grow"
                 placeholder="Enter Test Data..."><% if(typeof data!='undefined' ? data : ''){ %><%= data %><% } %></textarea>
             </div>
           </div>
 
-        </form>
       </div>
-      <div class='output'>
 
-        <!-- Tab links -->
-       <!--- <p>
-          <% if(typeof ml_return!='undefined' ? ml_return : ''){ %><%= ml_return %><% } %>
-        </p>-->
-        <textarea id="result" class="result" placeholder="Results go here..."><% if(typeof ml_return_formatted!='undefined' ? ml_return_formatted : ''){ %><%= ml_return_formatted %><% } %>
-        </textarea>
+      <!-- output container -->
+      <div class='output flex-no-shrink flex flex-col justify-between bg-bg-dark overflow-y-hidden'>
 
-        <% if(typeof error!='undefined' ? error : ''){ %>
-          <h3> Results Stderr: </h1>
-          <p><%= error %></p>
-        <% } %>
+        <!-- output tabs  -->
+        <div class='mb-2'>
+          <button class="tablinks" onclick="tabResult(event, 'formatted')" id="defaultTab" >Formatted</button>
+          <button class="tablinks" onclick="tabResult(event, 'stdout')">Stdout</button>
+          <button class="tablinks" onclick="tabResult(event, 'stderr')">Stderr</button>
+        </div>
+          
+        <!-- formatted output -->
+        <div id="formatted" class="tabcontent flex-grow">
+          <textarea id="result" class="result absolute " placeholder="Results go here...">
+            <% if(typeof ml_return_formatted!='undefined' ? ml_return_formatted : ''){ %><%= ml_return_formatted %><% } %>
+          </textarea>
+        </div>
+
+        <!-- stdout output -->
+        <div id="stdout" class="tabcontent flew-grow">
+          <% if(typeof ml_return!='undefined' ? ml_return : ''){ %>
+            <p><%= ml_return %></p>
+          <% } %>
+        </div>
+
+        <!-- stderr output -->
+        <div id="stderr" class="tabcontent text-err flex-grow">
+          <% if(typeof error!='undefined' ? error : ''){ %>
+            <p><%= error %></p>
+          <% } %>
+        </div>
+      
       </div>
+
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on('index', function (data) {
+          $("#result").append(data.ml_return_formatted)
+        });
+    </script>
   </body>
 </html>
